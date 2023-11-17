@@ -9,40 +9,44 @@
  */
 void monty_push(stack_t **stack, unsigned int line_number)
 {
-	stack_t *mp, *new1;
+	stack_t *new1 = malloc(sizeof(stack_t)), *mp;
 	int a;
 
-	new1 = malloc(sizeof(stack_t));
-	if (new1 == NULL)
-		set_op_tok_error(malloc_error());
+	if (!new1 || !op_toks[1] || (op_toks[1][0] == '-' && !op_toks[1][1]))
+	{
+		set_op_tok_error(!new1 ? malloc_error() : no_int_error(line_number));
 		return;
-
-	if (op_toks[1] == NULL)
-		set_op_tok_error(no_int_error(line_number));
-		return;
+	}
 
 	for (a = 0; op_toks[1][a]; a++)
-		if (op_toks[1][a] == '-' && a == 0)
-			continue;
+	{
 		if (op_toks[1][a] < '0' || op_toks[1][a] > '9')
+		{
 			set_op_tok_error(no_int_error(line_number));
+			free(new1);
 			return;
+		}
+	}
 	new1->n = atoi(op_toks[1]);
 
-	if (check_mode(*stack) == STACK) /* STACK mode insert at front... */
-		mp = (*stack)->next;
+	mp = *stack;
+
+	if (check_mode(*stack) == STACK)
+	{
 		new1->prev = *stack;
-		new1->next = mp;
-		if (mp)
-			mp->prev = new1;
-		(*stack)->next = new1;
-	else /* QUEUE mode insert at end... */
-		mp = *stack;
+		new1->next = mp->next;
+		if (mp->next)
+			mp->next->prev = new1;
+		mp->next = new1;
+	}
+	else
+	{
 		while (mp->next)
 			mp = mp->next;
 		new1->prev = mp;
 		new1->next = NULL;
 		mp->next = new1;
+	}
 }
 
 /**
@@ -102,7 +106,7 @@ void monty_pop(stack_t **stack, unsigned int line_number)
 	}
 
 	next = (*stack)->next->next;
-	free((*stack)->net);
+	free((*stack)->next);
 	if (next)
 		next->prev = *stack;
 	(*stack)->next = next;

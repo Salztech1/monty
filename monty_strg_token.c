@@ -1,3 +1,4 @@
+#include "monty.h"
 #include <stdlib.h>
 
 /**
@@ -25,7 +26,7 @@ char **strtow(char *str, char *delims)
 		return (NULL);
 	while (a < sent_numb)
 	{
-		sentence_lengt = get_word_length(str, delims);
+		sentencelengt = get_word_length(str, delims);
 		if (is_delim(*str, delims))
 		{
 			str = get_next_word(str, delims);
@@ -37,13 +38,13 @@ char **strtow(char *str, char *delims)
 				a--;
 				free(sentence[a]);
 			}
-			free(sentence);
-			return (NULL);
+		free(sentence);
+		return (NULL);
 		j = 0;
 		while (j < sentencelengt)
 			sentence[a][j] = *(str + j);
-			j++;
-		words[a][j] = '\0'; /* set end of str... */
+		j++;
+		sentence[a][j] = '\0'; /* set end of str... */
 		str = get_next_word(str, delims);
 		a++;
 	}

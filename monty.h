@@ -57,20 +57,27 @@ void monty_pall(stack_t **stack, unsigned int line_number);
 void monty_pint(stack_t **stack, unsigned int line_number);
 void monty_pop(stack_t **stack, unsigned int line_number);
 void monty_swap(stack_t **stack, unsigned int line_number);
+
+/* Opcode main functions for operations - opcode_funcs.c */
 void monty_add(stack_t **stack, unsigned int line_number);
-void monty_nop(stack_t **stack, unsigned int line_number);
 void monty_sub(stack_t **stack, unsigned int line_number);
 void monty_div(stack_t **stack, unsigned int line_number);
 void monty_mul(stack_t **stack, unsigned int line_number);
 void monty_mod(stack_t **stack, unsigned int line_number);
+
+/* Opcode main functions for printing nothing, character
+ * and string - opcode_funcs.c */
+void monty_nop(stack_t **stack, unsigned int line_number);
 void monty_pchar(stack_t **stack, unsigned int line_number);
 void monty_pstr(stack_t **stack, unsigned int line_number);
+
+/* Opcode, queue and stack functions */
 void monty_rotl(stack_t **stack, unsigned int line_number);
 void monty_rotr(stack_t **stack, unsigned int line_number);
 void monty_stack(stack_t **stack, unsigned int line_number);
 void monty_queue(stack_t **stack, unsigned int line_number);
 
-/* Tokenization functions - token.c */
+/* Token custom std library functions - token.c */
 char **strtow(char *str, char *delims);
 int is_delim(char ch, char *delims);
 int get_word_length(char *str, char *delims);
@@ -82,5 +89,21 @@ char *get_int(int num);
 unsigned int _abs(int);
 int get_numbase_len(unsigned int num, unsigned int base);
 void fill_numbase_buff(unsigned int num, unsigned int base, char *buff, int buff_size);
+
+/* Warning messages and error functions for
+ * (usage, malloc, file opening, unknown,invalid) - error.c */
+int usage_error(void);
+int malloc_error(void);
+int f_open_error(char *filename);
+int unknown_op_error(char *opcode, unsigned int line_number);
+int no_int_error(unsigned int line_number);
+
+/* Warning message and error function for
+ * (pop, pint, math, division, empty stacks using pchar) */
+int pop_error(unsigned int line_number);
+int pint_error(unsigned int line_number);
+int short_stack_error(unsigned int line_number, char *op);
+int div_error(unsigned int line_number);
+int pchar_error(unsigned int line_number, char *message);
 
 #endif /* __MONTY_H__ */
