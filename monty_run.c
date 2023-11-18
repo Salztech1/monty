@@ -3,7 +3,7 @@
 #include <string.h>
 
 /**
- * free_tokens - It frees the global op_toks array of strings.
+ * free_tokens - Function frees the global op_toks array of strings.
  */
 void free_tokens(void)
 {
@@ -19,7 +19,7 @@ void free_tokens(void)
 }
 
 /**
- * token_arr_len - It gets the length of current op_toks.
+ * token_arr_len - Function gets the length of current op_toks.
  *
  * Return: Length of current op_toks (as int).
  */
@@ -33,7 +33,7 @@ unsigned int token_arr_len(void)
 }
 
 /**
- * is_empty_line - It checks if a line read from getline
+ * is_empty_line - Function checks if a line read from getline
  * only contains delimiters.
  * @line: input param (A pointer to the line)
  * @delims: input param (A string of delimiter characters)
@@ -57,93 +57,4 @@ int is_empty_line(char *line, char *delims)
 	}
 
 	return (1);
-}
-
-/**
- * get_op_func - It matches an opcode with its corresponding function.
- * @opcode: input param (The opcode to match)
- *
- * Return: A pointer to the corresponding function.
- */
-void (*get_op_func(char *opcode))(stack_t**, unsigned int)
-{
-	instruction_t op_funcs[] = {
-		{"push", monty_push},
-		{"pall", monty_pall},
-		{"pint", monty_pint},
-		{"pop", monty_pop},
-		{"swap", monty_swap},
-		{"add", monty_add},
-		{"nop", monty_nop},
-		{"sub", monty_sub},
-		{"div", monty_div},
-		{"mul", monty_mul},
-		{"mod", monty_mod},
-		{"pchar", monty_pchar},
-		{"pstr", monty_pstr},
-		{"rotl", monty_rotl},
-		{"rotr", monty_rotr},
-		{"stack", monty_stack},
-		{"queue", monty_queue},
-		{NULL, NULL}
-	};
-	int a;
-
-	for (a = 0; op_funcs[a].opcode; a++)
-	{
-		if (strcmp(opcode, op_funcs[a].opcode) == 0)
-			return (op_funcs[a].f);
-	}
-
-	return (NULL);
-}
-
-/**
- * run_monty - opcode main function to execute a Monty bytecodes script.
- * @script_fd: input param - File descriptor for an open Monty
- * bytecodes script.
- *
- * Return: EXIT_SUCCESS on success, respective error code on failure.
- */
-#define MAX_LINE_LENGTH 1024
-
-int run_monty(FILE *script_fd)
-{
-	stack_t *stack = NULL;
-	char line[MAX_LINE_LENGTH];
-	size_t exit_status = EXIT_SUCCESS;
-	unsigned int line_number = 0, prev_tok_len = 0;
-	void (*op_func)(stack_t**, unsigned int);
-
-	if (init_stack(&stack) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	while (fgets(line, MAX_LINE_LENGTH, script_fd) != NULL)
-		line_number++;
-		op_toks = strtow(line, DELIMS);
-		if (op_toks == NULL)
-			if (is_empty_line(line, DELIMS))
-				continue;
-			free_stack(&stack)
-			return (malloc_error());
-		if (op_toks[0][0] == '#')/* comment line */
-			free_tokens();
-			continue;
-		op_func = get_op_func(op_toks[0]);
-		if (op_func == NULL)
-			free_stack(&stack);
-			exit_status = unknown_op_error(op_toks[0], line_number);
-			free_tokens();
-			break;
-		prev_tok_len = token_arr_len();
-		op_func(&stack, line_number);
-		if (token_arr_len() != prev_tok_len)
-			exit_status = op_toks && op_toks[prev_tok_len] ?
-				atoi(op_toks[prev_tok_len]) : EXIT_FAILURE;
-			free_tokens();
-			break;
-		free_tokens();
-	free_stack(&stack);
-	if (line[0] == '\0' || line[0] == '\n')
-		return (malloc_error());
-	return (exit_status);
 }

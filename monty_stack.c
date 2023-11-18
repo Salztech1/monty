@@ -2,7 +2,7 @@
 #include <string.h>
 
 /**
- * free_stack - It frees a stack_t stack.
+ * free_stack - Function frees a stack_t stack.
  * @stack: input param - A pointer to the top (stack) or
  *         bottom (queue) of a stack_t.
  */
@@ -19,8 +19,8 @@ void free_stack(stack_t **stack)
 }
 
 /**
- * init_stack - To initializes a stack_t stack with beginning
- *              stack and ending queue nodes.
+ * init_stack - Function initializes a stack_t stack with
+ * beginning stack and ending queue nodes.
  * @stack: input param(A pointer to an unitialized stack_t stack)
  *
  * Return: If an error occurs - EXIT_FAILURE.
@@ -32,7 +32,7 @@ int init_stack(stack_t **stack)
 
 	k = malloc(sizeof(stack_t));
 	if (k == NULL)
-		return (malloc_error());
+		return (sys_err_malloc());
 
 	k->n = STACK;
 	k->prev = NULL;
@@ -44,7 +44,8 @@ int init_stack(stack_t **stack)
 }
 
 /**
- * check_mode - To check if a stack_t linked list is in stack or queue mode.
+ * check_mode - Function check if a stack_t linked list is
+ * in stack or queue mode.
  * @stack: input param - A pointer to the top (stack) or bottom (queue)
  *         of a stack_t linked list.
  *

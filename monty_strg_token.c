@@ -74,7 +74,7 @@ int is_delim(char ch, char *delims)
 }
 
 /**
- * get_word_length - Function gets the word length of cur word in str
+ * get_word_length - Function gets the word length of current word in string
  * @str: input param (string to get word length from current word)
  * @delims: input param (delimitors to use to delimit words)
  *

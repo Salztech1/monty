@@ -15,7 +15,7 @@ void set_op_tok_error(int error_code)
 	new_toks1 = malloc(sizeof(char *) * (toks_lengt + 2));
 	if (!op_toks)
 	{
-		malloc_error();
+		sys_err_malloc();
 		return;
 	}
 	while (a < toks_lengt)
@@ -27,7 +27,7 @@ void set_op_tok_error(int error_code)
 	if (!exit_strg)
 	{
 		free(new_toks1);
-		malloc_error();
+		sys_err_malloc();
 		return;
 	}
 	new_toks1[a++] = exit_strg;

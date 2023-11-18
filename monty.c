@@ -6,7 +6,7 @@
 char **op_toks = NULL;
 
 /**
- * main - This is the entry point for Monty Interp function
+ * main - Function to the entry point for Monty Interpreter function
  * @argc: input param (the count of arguments passed to the program)
  * @argv: input param (pointer to an array of char pointers to arguments)
  *
@@ -18,11 +18,10 @@ int main(int argc, char **argv)
 	int exit_code = EXIT_SUCCESS;
 
 	if (argc != 2)
-		return (usage_error());
+		return (sys_err_usage());
 	script_fd = fopen(argv[1], "r");
 	if (script_fd == NULL)
-		return (f_open_error(argv[1]));
-	exit_code = run_monty(script_fd);
+		return (sys_err_fopen(argv[1]));
 	fclose(script_fd);
 	return (exit_code);
 }
